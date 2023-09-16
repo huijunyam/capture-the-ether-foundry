@@ -33,3 +33,6 @@
 [submodule "14FiftyYears/lib/forge-std"]
 	path = 14FiftyYears/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "Mapping/lib/forge-std"]
+	path = Mapping/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
