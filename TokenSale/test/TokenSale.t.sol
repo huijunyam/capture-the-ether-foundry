@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "../src/TokenSale.sol";
+import "forge-std/console.sol";
 
 contract TokenSaleTest is Test {
     TokenSale public tokenSale;
@@ -17,8 +18,12 @@ contract TokenSaleTest is Test {
 
     // Use the instance of tokenSale and exploitContract
     function testIncrement() public {
+        console.log(address(tokenSale).balance);
+        console.log(address(exploitContract).balance);
         // Put your solution here
-
+        exploitContract.exploit();
+        console.log(address(tokenSale).balance);
+        console.log(address(exploitContract).balance);
         _checkSolved();
     }
 

